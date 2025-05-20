@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma" // Your specified output path
+}
+
+datasource db {
+  provider = "sqlite" // Using SQLite as per your existing schema
+  url      = env("DATABASE_URL")
+}
+
+// Your existing models
+model Agent {
+  id           Int                @id @default(autoincrement())
+  name         String
+  prompt       String // Main agent prompt
+  routeDetails AgentRouteDetail[]
+
+  // Optional: Link Agent to a User (if agents are created by users)
+  userId String? // Assuming User ID is String
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@index([userId]) // Optional: Add an index if you add the userId relation
+}
+
+model AgentRouteDetail {
+  id      Int    @id @default(autoincrement())
+  route   String
+  prompt  String
+  agentId Int
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+}
+
+// --- Auth.js Models ---
+
+model User {
+  id            String    @id @default(cuid()) // Using CUID for unique string IDs
+  name          String?
+  email         String?   @unique // User's email address, must be unique
+  emailVerified DateTime? // Timestamp when the email was verified
+  image         String? // URL to the user's profile image
+  password      String? // Hashed password (only if using Credentials provider)
+
+  accounts Account[] // OAuth accounts linked to this user
+  sessions Session[] // User's active sessions
+  agents   Agent[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String // Foreign key linking to the User model
+  type              String // Type of account (e.g., "oauth", "email")
+  provider          String // Name of the OAuth provider (e.g., "google", "github")
+  providerAccountId String // User's ID on the OAuth provider's system
+  refresh_token     String? // OAuth refresh token
+  access_token      String? // OAuth access token
+  expires_at        Int? // Timestamp when the access token expires
+  token_type        String? // Type of token (e.g., "bearer")
+  scope             String? // Scope granted by the user
+  id_token          String? // OAuth ID token
+  session_state     String? // OAuth session state
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId]) // Ensures a user can only link one account per provider
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique // Unique token for the session
+  userId       String // Foreign key linking to the User model
+  expires      DateTime // Timestamp when the session expires
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String // Email or other identifier
+  token      String   @unique // Unique token for verification
+  expires    DateTime // Timestamp when the token expires
+
+  @@unique([identifier, token]) // Ensures identifier/token pair is unique
+}
