@@ -1,16 +1,22 @@
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@/generated/prisma';
 import Link from 'next/link';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from 'next/navigation';
 
 // Define the Agent type based on Prisma schema
 // This assumes your prisma client is generated in '@generated/prisma'
 // Adjust the import path if your generated client is elsewhere.
 type Agent = Prisma.AgentGetPayload<{}>;
 
-// Asynchronously fetches agents from the database
-async function fetchAgents(): Promise<Agent[]> {
+// Asynchronously fetches agents from the database for the current user
+async function fetchAgents(userId: string): Promise<Agent[]> {
   try {
     const agents = await prisma.agent.findMany({
+      where: {
+        userId: userId, // Filter agents by user ID
+      },
       orderBy: {
         name: 'asc', // Orders agents by name in ascending order
       },
@@ -24,14 +30,28 @@ async function fetchAgents(): Promise<Agent[]> {
 
 // The main page component for displaying agents
 export default async function AgentsPage() {
-  const agents = await fetchAgents();
+  // Get the session server-side
+  const session = await getServerSession(authOptions);
+  
+  // Redirect to login if not authenticated
+  if (!session) {
+    redirect('/api/auth/signin');
+  }
+  
+  // Fetch agents for the current user
+  const agents = await fetchAgents(session.user.id);
 
   return (
     <div>
       <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
-        {/* Header section with title and action buttons */}
+        {/* Header section with welcome message and title */}
         <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-          <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100">Your Agents</h1>
+          <div>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+              Welcome, {session.user.name || session.user.email}
+            </p>
+            <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100">Your Agents</h1>
+          </div>
           {/* Container for the new agent creation buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
             <Link

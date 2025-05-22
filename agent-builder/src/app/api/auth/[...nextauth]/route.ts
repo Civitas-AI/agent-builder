@@ -101,7 +101,7 @@ export const authOptions: NextAuthOptions = {
   },
 
   // A secret to sign and encrypt tokens
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 // For App Router (app/api/auth/[...nextauth]/route.ts):
