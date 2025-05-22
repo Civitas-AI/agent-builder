@@ -1427,6 +1427,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     prompt: string | null
+    type: string | null
     userId: string | null
   }
 
@@ -1434,6 +1435,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     prompt: string | null
+    type: string | null
     userId: string | null
   }
 
@@ -1441,6 +1443,7 @@ export namespace Prisma {
     id: number
     name: number
     prompt: number
+    type: number
     userId: number
     _all: number
   }
@@ -1458,6 +1461,7 @@ export namespace Prisma {
     id?: true
     name?: true
     prompt?: true
+    type?: true
     userId?: true
   }
 
@@ -1465,6 +1469,7 @@ export namespace Prisma {
     id?: true
     name?: true
     prompt?: true
+    type?: true
     userId?: true
   }
 
@@ -1472,6 +1477,7 @@ export namespace Prisma {
     id?: true
     name?: true
     prompt?: true
+    type?: true
     userId?: true
     _all?: true
   }
@@ -1566,6 +1572,7 @@ export namespace Prisma {
     id: number
     name: string
     prompt: string
+    type: string
     userId: string | null
     _count: AgentCountAggregateOutputType | null
     _avg: AgentAvgAggregateOutputType | null
@@ -1592,6 +1599,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     prompt?: boolean
+    type?: boolean
     userId?: boolean
     routeDetails?: boolean | Agent$routeDetailsArgs<ExtArgs>
     user?: boolean | Agent$userArgs<ExtArgs>
@@ -1602,6 +1610,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     prompt?: boolean
+    type?: boolean
     userId?: boolean
     user?: boolean | Agent$userArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
@@ -1610,6 +1619,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     prompt?: boolean
+    type?: boolean
     userId?: boolean
     user?: boolean | Agent$userArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
@@ -1618,10 +1628,11 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     prompt?: boolean
+    type?: boolean
     userId?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "prompt" | "userId", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "prompt" | "type" | "userId", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     routeDetails?: boolean | Agent$routeDetailsArgs<ExtArgs>
     user?: boolean | Agent$userArgs<ExtArgs>
@@ -1644,6 +1655,7 @@ export namespace Prisma {
       id: number
       name: string
       prompt: string
+      type: string
       userId: string | null
     }, ExtArgs["result"]["agent"]>
     composites: {}
@@ -2073,6 +2085,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Agent", 'Int'>
     readonly name: FieldRef<"Agent", 'String'>
     readonly prompt: FieldRef<"Agent", 'String'>
+    readonly type: FieldRef<"Agent", 'String'>
     readonly userId: FieldRef<"Agent", 'String'>
   }
     
@@ -7953,6 +7966,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     prompt: 'prompt',
+    type: 'type',
     userId: 'userId'
   };
 
@@ -8077,6 +8091,7 @@ export namespace Prisma {
     id?: IntFilter<"Agent"> | number
     name?: StringFilter<"Agent"> | string
     prompt?: StringFilter<"Agent"> | string
+    type?: StringFilter<"Agent"> | string
     userId?: StringNullableFilter<"Agent"> | string | null
     routeDetails?: AgentRouteDetailListRelationFilter
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -8086,6 +8101,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     prompt?: SortOrder
+    type?: SortOrder
     userId?: SortOrderInput | SortOrder
     routeDetails?: AgentRouteDetailOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
@@ -8098,6 +8114,7 @@ export namespace Prisma {
     NOT?: AgentWhereInput | AgentWhereInput[]
     name?: StringFilter<"Agent"> | string
     prompt?: StringFilter<"Agent"> | string
+    type?: StringFilter<"Agent"> | string
     userId?: StringNullableFilter<"Agent"> | string | null
     routeDetails?: AgentRouteDetailListRelationFilter
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -8107,6 +8124,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     prompt?: SortOrder
+    type?: SortOrder
     userId?: SortOrderInput | SortOrder
     _count?: AgentCountOrderByAggregateInput
     _avg?: AgentAvgOrderByAggregateInput
@@ -8122,6 +8140,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Agent"> | number
     name?: StringWithAggregatesFilter<"Agent"> | string
     prompt?: StringWithAggregatesFilter<"Agent"> | string
+    type?: StringWithAggregatesFilter<"Agent"> | string
     userId?: StringNullableWithAggregatesFilter<"Agent"> | string | null
   }
 
@@ -8432,6 +8451,7 @@ export namespace Prisma {
   export type AgentCreateInput = {
     name: string
     prompt: string
+    type: string
     routeDetails?: AgentRouteDetailCreateNestedManyWithoutAgentInput
     user?: UserCreateNestedOneWithoutAgentsInput
   }
@@ -8440,6 +8460,7 @@ export namespace Prisma {
     id?: number
     name: string
     prompt: string
+    type: string
     userId?: string | null
     routeDetails?: AgentRouteDetailUncheckedCreateNestedManyWithoutAgentInput
   }
@@ -8447,6 +8468,7 @@ export namespace Prisma {
   export type AgentUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     routeDetails?: AgentRouteDetailUpdateManyWithoutAgentNestedInput
     user?: UserUpdateOneWithoutAgentsNestedInput
   }
@@ -8455,6 +8477,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     routeDetails?: AgentRouteDetailUncheckedUpdateManyWithoutAgentNestedInput
   }
@@ -8463,18 +8486,21 @@ export namespace Prisma {
     id?: number
     name: string
     prompt: string
+    type: string
     userId?: string | null
   }
 
   export type AgentUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
   export type AgentUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -8855,6 +8881,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     prompt?: SortOrder
+    type?: SortOrder
     userId?: SortOrder
   }
 
@@ -8866,6 +8893,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     prompt?: SortOrder
+    type?: SortOrder
     userId?: SortOrder
   }
 
@@ -8873,6 +8901,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     prompt?: SortOrder
+    type?: SortOrder
     userId?: SortOrder
   }
 
@@ -9762,6 +9791,7 @@ export namespace Prisma {
   export type AgentCreateWithoutRouteDetailsInput = {
     name: string
     prompt: string
+    type: string
     user?: UserCreateNestedOneWithoutAgentsInput
   }
 
@@ -9769,6 +9799,7 @@ export namespace Prisma {
     id?: number
     name: string
     prompt: string
+    type: string
     userId?: string | null
   }
 
@@ -9791,6 +9822,7 @@ export namespace Prisma {
   export type AgentUpdateWithoutRouteDetailsInput = {
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneWithoutAgentsNestedInput
   }
 
@@ -9798,6 +9830,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -9862,6 +9895,7 @@ export namespace Prisma {
   export type AgentCreateWithoutUserInput = {
     name: string
     prompt: string
+    type: string
     routeDetails?: AgentRouteDetailCreateNestedManyWithoutAgentInput
   }
 
@@ -9869,6 +9903,7 @@ export namespace Prisma {
     id?: number
     name: string
     prompt: string
+    type: string
     routeDetails?: AgentRouteDetailUncheckedCreateNestedManyWithoutAgentInput
   }
 
@@ -9964,6 +9999,7 @@ export namespace Prisma {
     id?: IntFilter<"Agent"> | number
     name?: StringFilter<"Agent"> | string
     prompt?: StringFilter<"Agent"> | string
+    type?: StringFilter<"Agent"> | string
     userId?: StringNullableFilter<"Agent"> | string | null
   }
 
@@ -10134,6 +10170,7 @@ export namespace Prisma {
     id?: number
     name: string
     prompt: string
+    type: string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -10199,6 +10236,7 @@ export namespace Prisma {
   export type AgentUpdateWithoutUserInput = {
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     routeDetails?: AgentRouteDetailUpdateManyWithoutAgentNestedInput
   }
 
@@ -10206,6 +10244,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     routeDetails?: AgentRouteDetailUncheckedUpdateManyWithoutAgentNestedInput
   }
 
@@ -10213,6 +10252,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
 

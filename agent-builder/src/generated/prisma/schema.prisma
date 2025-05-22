@@ -13,6 +13,7 @@ model Agent {
   id           Int                @id @default(autoincrement())
   name         String
   prompt       String // Main agent prompt
+  type         String // Agent type (email, phone, etc.)
   routeDetails AgentRouteDetail[]
 
   // Optional: Link Agent to a User (if agents are created by users)

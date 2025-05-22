@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export async function POST(request: NextRequest) {
   try {
+    // Get current session/user
+    const session = await getServerSession(authOptions);
+    
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { message: 'Unauthorized' },
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    const userId = session.user.id;
     const body = await request.json();
     
     // Extract data from the request body
@@ -16,13 +29,15 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Create the agent and its associated route details in a single transaction
+    // Create the agent with user association
     const agent = await prisma.agent.create({
       data: {
         name,
         prompt,
+        type: body.type,
+        userId: userId, // Associate with current user
         routeDetails: {
-          create: routeDetails.map((detail: { route: string; prompt: string }) => ({
+          create: routeDetails.map((detail: any) => ({
             route: detail.route,
             prompt: detail.prompt,
           })),
